@@ -5,6 +5,10 @@ export const NAV_ITEMS = [
 ];
 
 // Sign-up form select options
+export const COUNTRY_OPTIONS = [
+    { value: 'United States', label: 'United States' },
+    { value: 'Canada', label: 'Canada' },
+];
 export const INVESTMENT_GOALS = [
     { value: 'Growth', label: 'Growth' },
     { value: 'Income', label: 'Income' },
