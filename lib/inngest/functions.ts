@@ -1,11 +1,22 @@
 import {inngest} from "@/lib/inngest/client";
+import type { EventPayload, GetStepTools } from "inngest";
 import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "./prompts";
 import { sendWelcomeEmail } from "@/lib/nodemailer/index";
 
+type SignUpEmailData = {
+    country: string;
+    investmentGoals: string;
+    riskTolerance: string;
+    preferredIndustry: string;
+    email: string;
+    name: string;
+};
+
+type SignUpEmailEventPayload = EventPayload<SignUpEmailData> & { data: SignUpEmailData };
 
 export const sendSignUpEmail = inngest.createFunction(
-    { id: 'sign-up-email', event: 'app/user.created'  },
-    async ({ event, step }: { event: any, step: any }) => {
+    { id: 'sign-up-email', triggers: [{ event: 'app/user.created' }] },
+    async ({ event, step }: { event: SignUpEmailEventPayload; step: GetStepTools<typeof inngest> }) => {
         const userProfile = `
             - Country: ${event.data.country}
             - Investment goals: ${event.data.investmentGoals}
