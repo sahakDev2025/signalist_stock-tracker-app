@@ -33,7 +33,7 @@ export const connectToDatabase=async()=>{
     if(!cached.promise){
         cached.promise=mongoose.connect(MONGODB_URI,{bufferCommands:false})
     }
-}
+
 
 
 try{
@@ -45,3 +45,8 @@ try{
 
 }
 console.log(`Connected to Database ${process.env.NODE_ENV}-${MONGODB_URI}`);
+
+return cached.conn;
+
+}
+
