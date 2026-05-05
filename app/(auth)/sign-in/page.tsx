@@ -2,10 +2,14 @@
 import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
+import { useRouter } from "next/navigation";
 import {  useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 
 const SignIn = () => {  
+    const router=useRouter();
 
     const {
     register,
@@ -19,17 +23,24 @@ const SignIn = () => {
    },
    mode:"onBlur"
   });
+const onSubmit = async (data: SignInFormData) => {
+        try {
+            const result = await signInWithEmail(data);
+            if (result.success) {
+                router.push('/');
+                return;
+            }
 
-   const  onSubmit=async(data:SignInFormData)=>{
-   
-    try{
-        console.log("Form Data:", data);
-
-    } catch(e){
-        console.error("Sign in failed:", e);
+            toast.error(result.error ?? 'Sign in failed', {
+                description: 'Please check your credentials and try again.'
+            });
+        } catch (e) {
+            console.error(e);
+            toast.error('Sign in failed', {
+                description: e instanceof Error ? e.message : 'Failed to sign in.'
+            });
+        }
     }
-   }
-
 
   return (
    <>
@@ -40,7 +51,7 @@ const SignIn = () => {
     {/* INPUT */}
    
     <InputField 
-         name="Email"
+         name="email"
          label="Email"
          placeholder="email@example.com"
          register={register}
@@ -48,7 +59,7 @@ const SignIn = () => {
          validation={{ required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" } }}
     />
      <InputField 
-         name="Password"
+         name="password"
          label="Password"
          placeholder="Enter a strong password"
          type="password"
@@ -58,7 +69,7 @@ const SignIn = () => {
     /> 
     
 
-    <Button type="submit" onSubmit={handleSubmit(onSubmit)} disabled={isSubmitting} className="yellow-btn w-full mt-5">
+    <Button type="submit" disabled={isSubmitting} className="yellow-btn w-full mt-5">
         {
             isSubmitting ? "Signing in..." : "Sign In"
         }
