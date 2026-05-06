@@ -6,7 +6,7 @@ import React from 'react'
 
 const Layout = async ({children}:{children:React.ReactNode}) => {
 
-  const session= await auth.api.getSession({
+  const session= await auth!.api.getSession({
     headers: await headers()
   })
 

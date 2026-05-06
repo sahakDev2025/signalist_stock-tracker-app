@@ -3,9 +3,7 @@ import { Controller } from "react-hook-form"
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
@@ -16,7 +14,7 @@ const SelectField = ({ name, label, placeholder, options, control, error, requir
     return (
         <div className="space-y-2">
             <Controller
-                name={name}
+                name={name as keyof SignUpFormData}
                 control={control}
                 rules={{
                     required: required ? `Please select a ${label.toLowerCase()}` : false,

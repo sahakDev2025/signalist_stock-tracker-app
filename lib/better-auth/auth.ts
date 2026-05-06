@@ -18,7 +18,7 @@ export const getAuth=async()=>{
 
     authInstance=betterAuth({
 
-    database:mongodbAdapter(db as any),
+    database:mongodbAdapter(db),
     secret:process.env.BETTER_AUTH_SECRET!,
     baseURL:process.env.BETTER_AUTH_URL,
     emailAndPassword:{
@@ -31,7 +31,7 @@ export const getAuth=async()=>{
     },
     plugins:[nextCookies()]
 
-    } as any);
+    });
 
     return authInstance;
 
