@@ -1,4 +1,4 @@
-import { WELCOME_EMAIL_TEMPLATE } from "./templates";
+import { WELCOME_EMAIL_TEMPLATE, NEWS_SUMMARY_EMAIL_TEMPLATE } from "./templates";
 
 const nodemailer = require("nodemailer");
 
@@ -25,5 +25,22 @@ export const sendWelcomeEmail=async({email,name,intro}:WelcomeEmailData)=>{
     }
     await transporter.sendMail(mailOptions)
     
+
+}
+
+export const sendNewsSummaryEmail = async ({ email, name, newsContent }: { email: string; name: string; newsContent: string }) => {
+
+    const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE
+        .replace('{{name}}', name)
+        .replace('{{newsContent}}', newsContent);
+
+    const mailOptions = {
+        from: `"Stock-market <codewithjalal2025@gmail.com>"`,
+        to: email,
+        subject: "Your Daily Market News Summary",
+        text: "Here's your daily market news summary",
+        html: htmlTemplate
+    }
+    await transporter.sendMail(mailOptions)
 
 }
