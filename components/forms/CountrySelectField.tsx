@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState } from 'react';
@@ -19,7 +18,7 @@ import countryList from 'react-select-country-list';
 type CountrySelectProps = {
     name: string;
     label: string;
-    control: Control<any>;
+    control: Control<SignUpFormData>;
     error?: FieldError;
     required?: boolean;
 };
@@ -117,7 +116,7 @@ export const CountrySelectField = ({
                 {label}
             </Label>
             <Controller
-                name={name}
+                name={name as keyof SignUpFormData}
                 control={control}
                 rules={{
                     required: required ? `Please select ${label.toLowerCase()}` : false,

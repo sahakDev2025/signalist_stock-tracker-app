@@ -31,7 +31,7 @@ const SignUp = () => {
         mode: 'onBlur'
     });
 
-    const formControl = control as unknown as Control<any>;
+    const formControl = control as unknown as Control<SignUpFormData>;
 
     const onSubmit = async (data: SignUpFormData) => {
         try {
